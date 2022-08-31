@@ -26,7 +26,7 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
       - name: Build Docker Image
-        run: docker build . -f Dockerfile -t $DOCKERHUB_USERNAME/$REPOSITORY_NAME:latest
+        run: docker build . -f Dockerfile -t $DOCKERHUB_USERNAME/$REPOSITORY_NAME
       - name: Push Docker Image to Docker Hub
         run: docker push $DOCKERHUB_USERNAME/$REPOSITORY_NAME:latest
       # push-nodejs is the repository name
