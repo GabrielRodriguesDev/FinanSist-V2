@@ -48,5 +48,5 @@ jobs:
       - name: Deploy to Kubernetes
         run: kubectl apply -f ./Kubernetes/deployment.yml
 
-      # - name: Rollout Deployment
-      #   run: kubectl rollout restart  deployment -n ${{ secrets.KUBE_NAMESPACE }}
+      - name: Rollout Deployment
+        run: kubectl rollout restart  deployment finansist -n ${{ secrets.KUBE_NAMESPACE }}
