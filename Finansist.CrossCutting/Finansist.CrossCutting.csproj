@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Finansist.Database\Finansist.Database.csproj" />
+    <ProjectReference Include="..\Finansist.Domain\Finansist.Domain.csproj" />
+    <ProjectReference Include="..\Finansist.Infrastructure\Finansist.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
