@@ -40,7 +40,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_TOKEN }}
 
       - name: Setup kubectl
-        uses: matootie/dokube@v1.3.2
+        uses: matootie/dokube@v1.4.0
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
           clusterName: k8s-1-23-9-do-0-nyc1-1661280819783
