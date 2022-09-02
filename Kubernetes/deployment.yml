@@ -49,21 +49,21 @@ spec:
       targetPort: 80
       protocol: TCP 
 
----
+# ---
 
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  namespace: finansist
-  name: finansist-hpa
-spec:                                                     
-  scaleTargetRef:                                         
-    apiVersion: apps/v1                                   
-    kind: Deployment                                      
-    name: finansist                                        
-  minReplicas: 1                                          
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 90
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   namespace: finansist
+#   name: finansist-hpa
+# spec:                                                     
+#   scaleTargetRef:                                         
+#     apiVersion: apps/v1                                   
+#     kind: Deployment                                      
+#     name: finansist                                        
+#   minReplicas: 1                                          
+#   maxReplicas: 5
+#   targetCPUUtilizationPercentage: 90
 
 ---
 

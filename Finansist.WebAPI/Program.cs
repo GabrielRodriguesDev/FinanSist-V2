@@ -1,3 +1,5 @@
+using Finansist.CrossCutting;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -6,6 +8,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region DependencyInjection
+ConfigureRepository.ConfigureDI(builder.Services);
+#endregion
 
 var app = builder.Build();
 
