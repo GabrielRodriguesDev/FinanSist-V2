@@ -12,7 +12,9 @@ namespace Finansist.Database.Contexts
 {
     public class FinansistContext : DbContext
     {
-        public FinansistContext(DbContextOptions<FinansistContext> options) : base(options) {
+#nullable disable
+        public FinansistContext(DbContextOptions<FinansistContext> options) : base(options)
+        {
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,18 +22,18 @@ namespace Finansist.Database.Contexts
             var typesToMapping =
             (
             from x in Assembly.GetExecutingAssembly().GetTypes()
-                where x.IsClass && typeof(IMapping).IsAssignableFrom(x)
-                select x
+            where x.IsClass && typeof(IMapping).IsAssignableFrom(x)
+            select x
             ).ToList();
 
             foreach (var mapping in typesToMapping)
             {
-                IMapping? mappingClass = Activator.CreateInstance(mapping) as IMapping;
+                IMapping mappingClass = Activator.CreateInstance(mapping) as IMapping;
                 if (mappingClass != null)
                     mappingClass.OnModelCreating(modelBuilder);
             }
         }
-    
+
         public DbSet<Entidade> Entidade { get; set; }
     }
 }
