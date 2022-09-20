@@ -11,7 +11,8 @@ namespace Finansist.Database.Mapping
 {
     public abstract class BaseMapping<TEntity> where TEntity : BaseEntity
     {
-        protected EntityTypeBuilder<TEntity>? entity;
+#nullable disable
+        protected EntityTypeBuilder<TEntity> entity;
         public virtual void OnModelCreating(ModelBuilder modelBuilder)
         {
             this.entity = modelBuilder.Entity<TEntity>();

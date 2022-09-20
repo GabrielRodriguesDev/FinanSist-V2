@@ -5,12 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-#region DependencyInjection
+#region Dependency Injection
 ConfigureRepository.ConfigureDI(builder.Services);
+ConfigureService.ConfigureDI(builder.Services);
 #endregion
 
 var app = builder.Build();

@@ -15,5 +15,10 @@
         public DateTime? ExcluidoEm { get; private set; }
         public int CodigoExclusao { get; private set; }
 
+        public void setAlteradoEm()
+        {
+            this.AlteradoEm = DateTime.Now;
+        }
+
     }
 }

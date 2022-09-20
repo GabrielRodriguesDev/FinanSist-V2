@@ -33,7 +33,6 @@ namespace Finansist.Database.Contexts
                     mappingClass.OnModelCreating(modelBuilder);
             }
         }
-
         public DbSet<Entidade> Entidade { get; set; }
     }
 }
