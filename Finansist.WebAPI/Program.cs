@@ -1,16 +1,23 @@
 using Finansist.CrossCutting;
+using Finansist.WebAPI.SignalR;
+using Finansist.WebAPI.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+#region 
+Environment.SetEnvironmentVariable("BaseViaCEPUrl", builder.Configuration["External:BaseViaCEPUrl"]);
+#endregion
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
+
 
 #region Dependency Injection
 ConfigureRepository.ConfigureDI(builder.Services);
 ConfigureService.ConfigureDI(builder.Services);
+ConfigureClient.ConfigureDI(builder.Services);
 #endregion
 
 var app = builder.Build();
@@ -38,9 +45,15 @@ else
 
 #endregion
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//app.UseEndpoints(endpoints =>
+//    {
+//        endpoints.MapHub<ChatHub>("/chat");
+//    });
 
 app.MapControllers();
 

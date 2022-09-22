@@ -34,5 +34,7 @@ namespace Finansist.Database.Contexts
             }
         }
         public DbSet<Entidade> Entidade { get; set; }
+
+        public DbSet<ControleSequencia> ControleSequencias { get; set; }
     }
 }

@@ -5,6 +5,6 @@ namespace Finansist.Domain.Interfaces.Domain.Services
 {
     public interface IEntidadeService
     {
-        GennericCommandResult Create(CreateEntidadeCommand createCommand);
+        Task<GennericCommandResult> Create(CreateEntidadeCommand createCommand);
     }
 }
