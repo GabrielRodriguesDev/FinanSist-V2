@@ -1,4 +1,5 @@
 using Finansist.CrossCutting;
+using Finansist.WebAPI.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +8,19 @@ Environment.SetEnvironmentVariable("BaseViaCEPUrl", builder.Configuration["Exter
 #endregion
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSignalR();
+
+builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", b =>
+            {
+                b.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:4200");
+            }));
+
 
 
 #region Dependency Injection
@@ -47,15 +58,20 @@ else
 //app.UseMiddleware<ErrorHandlerMiddleware>();
 #endregion
 
+
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseCors("CorsPolicy");
 
-//app.UseEndpoints(endpoints =>
-//    {
-//        endpoints.MapHub<ChatHub>("/chat");
-//    });
+
+app.UseEndpoints(endpoints =>
+   {
+       endpoints.MapHub<NotifyHub>("/notify");
+   });
 
 app.MapControllers();
 
