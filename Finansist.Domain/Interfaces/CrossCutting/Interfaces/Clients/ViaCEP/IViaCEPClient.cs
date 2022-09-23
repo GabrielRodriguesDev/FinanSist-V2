@@ -6,6 +6,6 @@ namespace Finansist.Domain.Interfaces.CrossCutting.Interfaces.Clients
 {
     public interface IViaCEPClient
     {
-        Task<GennericCommandResult> GetEnderecoAsync(string cep);
+        Task<GenericCommandResult> GetEnderecoAsync(string cep);
     }
 }

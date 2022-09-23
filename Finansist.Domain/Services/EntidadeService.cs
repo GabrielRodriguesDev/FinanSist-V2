@@ -2,6 +2,7 @@ using Finansist.Domain.Commands;
 using Finansist.Domain.Commands.Entidade;
 using Finansist.Domain.Entities;
 using Finansist.Domain.Interfaces.CrossCutting.Interfaces.Clients;
+using Finansist.Domain.Interfaces.Database;
 using Finansist.Domain.Interfaces.Database.Helpers;
 using Finansist.Domain.Interfaces.Database.Repositories;
 using Finansist.Domain.Interfaces.Domain.Services;
@@ -13,27 +14,31 @@ namespace Finansist.Domain.Services
     {
         private IEntidadeRepository _entidadeRepository;
 
+        private IUnitOfWork _uow;
+
         private IViaCEPClient _viaCEPClient;
 
         private IControleSequenciaHelper _controleSequenciaHelper;
 
         public EntidadeService(
+            IUnitOfWork uow,
             IEntidadeRepository entidadeRepository,
             IViaCEPClient viaCEPClient,
             IControleSequenciaHelper controleSequenciaHelper
         )
         {
+            _uow = uow;
             _entidadeRepository = entidadeRepository;
             _viaCEPClient = viaCEPClient;
             _controleSequenciaHelper = controleSequenciaHelper;
         }
 
 
-        public async Task<GennericCommandResult> Create(CreateEntidadeCommand createCommand)
+        public async Task<GenericCommandResult> Create(CreateEntidadeCommand createCommand)
         {
             createCommand.Validate();
             if (createCommand.Invalid)
-                return new GennericCommandResult(false, "Ops! Algo deu errado");
+                return new GenericCommandResult(false, "Ops! Algo deu errado", createCommand.Notifications);
 
             Entidade entidade = new Entidade(createCommand);
 
@@ -42,27 +47,26 @@ namespace Finansist.Domain.Services
                 var result = await _viaCEPClient.GetEnderecoAsync(createCommand.CEP!);
                 if (!result.Sucess && result.Data == null)
                 {
-                    return new GennericCommandResult(false, "Não foi possivel localizar o cep");
+                    return new GenericCommandResult(false, "Nï¿½o foi possivel localizar o cep");
                 }
-
                 entidade.setEndereco(result.Data as EnderecoModel);
-   
             }
 
-            entidade.setCodigoInterno(_controleSequenciaHelper.ProcessoNumeroSequencial("Entidade"));
+            entidade.setCodigoInterno(_controleSequenciaHelper.ProcessoNumeroSequencial(entidade.GetType().Name.ToString()));
 
-            var teste = "teste";
+            _uow.BeginTransaction();
 
             try
             {
-
+                _entidadeRepository.Create(entidade);
+                _uow.Commit();
             }
             catch (System.Exception)
             {
-
+                _uow.Rollback();
                 throw;
             }
-            return new GennericCommandResult(true, "Entidade criada com sucesso", new { });
+            return new GenericCommandResult(true, "Entidade criada com sucesso");
         }
     }
 }

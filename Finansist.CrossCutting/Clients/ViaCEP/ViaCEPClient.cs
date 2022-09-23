@@ -11,7 +11,7 @@ namespace Finansist.CrossCutting.Clients.ViaCEP
         private static readonly HttpClient HttpClient = new HttpClient();
         private String baseUrl = Environment.GetEnvironmentVariable("BaseViaCEPUrl") ?? "";
 
-        public async Task<GennericCommandResult> GetEnderecoAsync(string cep)
+        public async Task<GenericCommandResult> GetEnderecoAsync(string cep)
         {
             var response = await HttpClient.GetAsync(baseUrl+$"ws/{cep}/json");
 
@@ -19,9 +19,9 @@ namespace Finansist.CrossCutting.Clients.ViaCEP
             if(!String.IsNullOrEmpty(responseContent) && response.IsSuccessStatusCode)
             {
                 var modeldb = JsonConvert.DeserializeObject<EnderecoModel>(responseContent);
-                return new GennericCommandResult(true, "Pedido no pagarme criado com sucesso!", modeldb!);
+                return new GenericCommandResult(true, "Pedido no pagarme criado com sucesso!", modeldb!);
             }
-            return new GennericCommandResult(false, "Deu erro");
+            return new GenericCommandResult(false, "Deu erro");
         }
     }
 }

@@ -53,13 +53,12 @@ namespace Finansist.Domain.Entities
 
         public void setEndereco(EnderecoModel? endereco)
         {
-            this.CEP = endereco.CEP;
+            this.CEP = endereco!.CEP.Replace("-", "");
             this.Logradouro = endereco.Logradouro;
             this.Bairro = endereco.Bairro;
             this.Complemento = endereco.Complemento;
             this.Localidade = endereco.Localidade;
             this.UF = endereco.UF;
-            this.Numero = endereco.Numero;
         }
     }
 }

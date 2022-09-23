@@ -24,7 +24,7 @@ namespace Finansist.Database.Mapping
             entity.Property(t => t.Id).HasComment("Identificador do registro.");
             entity.Property(t => t.CriadoEm).HasComment("Data e hora de criação do registro.");
             entity.Property(t => t.AlteradoEm).HasComment("Data e hora da última alteração do registro.");
-            entity.Property(t => t.ExcluidoEm).HasComment("Data e hora da exclusão lógica do registro.");
+
             #endregion
         }
     }

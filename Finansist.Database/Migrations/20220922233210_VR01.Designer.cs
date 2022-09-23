@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Finansist.Database.Migrations
 {
     [DbContext(typeof(FinansistContext))]
-    [Migration("20220922011650_VR02")]
-    partial class VR02
+    [Migration("20220922233210_VR01")]
+    partial class VR01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Finansist.Domain.Entities.ControleSequencia", b =>
@@ -32,16 +32,9 @@ namespace Finansist.Database.Migrations
                         .HasColumnType("datetime(6)")
                         .HasComment("Data e hora da última alteração do registro.");
 
-                    b.Property<int>("CodigoExclusao")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("CriadoEm")
                         .HasColumnType("datetime(6)")
                         .HasComment("Data e hora de criação do registro.");
-
-                    b.Property<DateTime?>("ExcluidoEm")
-                        .HasColumnType("datetime(6)")
-                        .HasComment("Data e hora da exclusão lógica do registro.");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -88,9 +81,6 @@ namespace Finansist.Database.Migrations
                         .HasColumnType("varchar(8)")
                         .HasComment("CEP.");
 
-                    b.Property<int>("CodigoExclusao")
-                        .HasColumnType("int");
-
                     b.Property<int>("CodigoInterno")
                         .HasColumnType("int")
                         .HasComment("Código interno (sequencial).");
@@ -107,10 +97,6 @@ namespace Finansist.Database.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)")
                         .HasComment("Descrição.");
-
-                    b.Property<DateTime?>("ExcluidoEm")
-                        .HasColumnType("datetime(6)")
-                        .HasComment("Data e hora da exclusão lógica do registro.");
 
                     b.Property<string>("Localidade")
                         .HasColumnType("longtext");

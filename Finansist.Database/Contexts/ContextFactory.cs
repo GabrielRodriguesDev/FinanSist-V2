@@ -7,7 +7,7 @@ namespace Finansist.Database.Contexts
     {
         public FinansistContext CreateDbContext(string[] args)
         {
-            var connectionString = "Server=localhost;Port=3306;Database=Finansist;Uid=root;Pwd=fx870";
+            var connectionString = "Server=localhost;Port=3306;Database=finansist;Uid=root;Pwd=fx870";
 
             var optionsBuilder = new DbContextOptionsBuilder<FinansistContext>();
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).LogTo(Console.Write);

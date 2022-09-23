@@ -13,7 +13,7 @@ namespace Finansist.WebAPI.Controllers
         {
             var tsc = new TaskCompletionSource<IActionResult>();
             var result = services.Create(createCommand);
-            tsc.SetResult(new JsonResult(result)
+            tsc.SetResult(new JsonResult(result.Result)
             {
                 StatusCode = 200
             });

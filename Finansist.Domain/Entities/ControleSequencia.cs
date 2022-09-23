@@ -2,6 +2,10 @@ namespace Finansist.Domain.Entities
 {
     public class ControleSequencia : BaseEntity
     {
+        public ControleSequencia()
+        {
+
+        }
         public ControleSequencia(string nome)
         {
             this.Nome = nome.ToUpper();

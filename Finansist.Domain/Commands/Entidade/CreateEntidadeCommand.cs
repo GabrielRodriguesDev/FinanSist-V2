@@ -29,8 +29,6 @@ namespace Finansist.Domain.Commands.Entidade
         [JsonIgnore]
         public bool BuscarCEP { get; set; }
 
-
-
         public override void Validate()
         {
             if (String.IsNullOrEmpty(this.Nome))
@@ -57,26 +55,26 @@ namespace Finansist.Domain.Commands.Entidade
                 (!String.IsNullOrEmpty(Logradouro)) &&
                 (!String.IsNullOrEmpty(Bairro)) &&
                 (!String.IsNullOrEmpty(Localidade)) &&
-                (!String.IsNullOrEmpty(UF)) ||
+                (!String.IsNullOrEmpty(UF)) &&
                 (Numero != null))
             {
                 this.ValidateAddress();
             }
-            else if ((String.IsNullOrEmpty(CEP)) &&
+            else if ((String.IsNullOrEmpty(CEP)) && (
                     (!String.IsNullOrEmpty(Logradouro)) ||
                     (!String.IsNullOrEmpty(Bairro)) ||
                     (!String.IsNullOrEmpty(Localidade)) ||
                     (!String.IsNullOrEmpty(UF)) ||
-                    (Numero != null))
+                    (Numero != null)))
             {
                 this.ValidateAddress();
             }
-            else if ((!String.IsNullOrEmpty(CEP)) &&
+            else if ((!String.IsNullOrEmpty(CEP)) && (
                     (String.IsNullOrEmpty(Logradouro)) ||
                     (String.IsNullOrEmpty(Bairro)) ||
                     (String.IsNullOrEmpty(Localidade)) ||
                     (String.IsNullOrEmpty(UF)) ||
-                    (Numero != null))
+                    (Numero != null)))
             {
                 if (String.IsNullOrEmpty(this.CEP))
                 {
@@ -97,13 +95,21 @@ namespace Finansist.Domain.Commands.Entidade
                         this.BuscarCEP = true;
                     }
                 }
+
+                if (this.Numero is null)
+                {
+                    this.AddNotification("Numero", "Informe o Número.");
+                }
+                else
+                {
+                    if (this.Numero > 999999)
+                        this.AddNotification("Numero", "Número máximo permitido é 999999.");
+                }
             }
         }
 
         public void ValidateAddress()
         {
-
-
             if (String.IsNullOrEmpty(this.CEP))
             {
                 this.AddNotification("CEP", "Informe o CEP");

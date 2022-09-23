@@ -1,16 +1,16 @@
 namespace Finansist.Domain.Commands
 {
-    public class GennericCommandResult
+    public class GenericCommandResult
     {
 
-        public GennericCommandResult(bool sucess, string message)
+        public GenericCommandResult(bool sucess, string message)
         {
             this.Sucess = sucess;
             this.Message = message;
 
         }
 
-        public GennericCommandResult(bool sucess, string message, object data)
+        public GenericCommandResult(bool sucess, string message, object data)
         {
             this.Sucess = sucess;
             this.Message = message;

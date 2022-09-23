@@ -1,6 +1,4 @@
 using Finansist.CrossCutting;
-using Finansist.WebAPI.SignalR;
-using Finansist.WebAPI.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,10 +43,14 @@ else
 
 #endregion
 
+#region Middleware
+//app.UseMiddleware<ErrorHandlerMiddleware>();
+#endregion
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
 
 //app.UseEndpoints(endpoints =>
 //    {
