@@ -22,8 +22,16 @@ namespace Finansist.WebAPI.Controllers
         {
             var tsc = new TaskCompletionSource<IActionResult>();
             var result = services.Create(createCommand);
+            // var genericResult = result.Result.Data!.GetType();
+            // var nome = genericResult.GetProperty("Nome")!.GetValue(genericResult.GetProperty("Nome"));
+
             if (result.Result.Sucess)
-                await _hubContext.Clients.All.SendMessage("Teste bolassimo");
+                await _hubContext.Clients.All.SendNotification(new
+                {
+                    Nome = "Gabriel",
+                    Idade = 20,
+                    Sonho = "Estabilidade"
+                });
             tsc.SetResult(new JsonResult(result.Result)
             {
                 StatusCode = 200

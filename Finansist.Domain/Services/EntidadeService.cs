@@ -66,7 +66,21 @@ namespace Finansist.Domain.Services
                 _uow.Rollback();
                 throw;
             }
-            return new GenericCommandResult(true, "Entidade criada com sucesso");
+            return new GenericCommandResult(true, "Entidade criada com sucesso", new
+            {
+                Id = entidade.Id,
+                CodigoInterno = entidade.CodigoInterno,
+                Nome = entidade.Nome,
+                Descricao = entidade.Descricao,
+                Ativo = entidade.Ativo,
+                CEP = entidade.CEP,
+                Logradouro = entidade.Logradouro,
+                Bairro = entidade.Bairro,
+                Complemento = entidade.Complemento,
+                Localidade = entidade.Localidade,
+                UF = entidade.UF,
+                Numero = entidade.Numero,
+            });
         }
     }
 }

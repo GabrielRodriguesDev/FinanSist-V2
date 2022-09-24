@@ -5,9 +5,14 @@ namespace Finansist.WebAPI.SignalR.Hubs
 {
     public class NotifyHub : Hub<INotifyClient>
     {
-        public async Task NewMessage(long username, string message)
+        public async Task Notification(object data)
         {
-            await Clients.All.SendMessage(message);
+            await Clients.All.SendNotification(data);
+        }
+
+        public Task<String> GetConnectionId()
+        {
+            return Task.FromResult(Context.ConnectionId.ToString());
         }
     }
 }
