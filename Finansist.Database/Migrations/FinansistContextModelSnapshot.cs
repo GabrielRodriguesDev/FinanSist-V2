@@ -171,7 +171,7 @@ namespace Finansist.Database.Migrations
                         .HasComment("Senha.");
 
                     b.Property<string>("Telefone")
-                        .HasColumnType("varchar(14)");
+                        .HasColumnType("varchar(15)");
 
                     b.HasKey("Id");
 

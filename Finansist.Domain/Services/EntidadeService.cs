@@ -47,7 +47,7 @@ namespace Finansist.Domain.Services
                 var result = await _viaCEPClient.GetEnderecoAsync(createCommand.CEP!);
                 if (!result.Sucess && result.Data == null)
                 {
-                    return new GenericCommandResult(false, "N�o foi possivel localizar o cep");
+                    return new GenericCommandResult(false, result.Message);
                 }
                 entidade.setEndereco(result.Data as EnderecoModel);
             }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Finansist.Database.Migrations
 {
     [DbContext(typeof(FinansistContext))]
-    [Migration("20220922233210_VR01")]
+    [Migration("20220927012622_VR01")]
     partial class VR01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,6 +125,63 @@ namespace Finansist.Database.Migrations
                         .HasDatabaseName("unq1_Entidade");
 
                     b.ToTable("Entidade", (string)null);
+
+                    b.HasComment("Tabela responsável pelos registros de entidade.");
+
+                    MySqlEntityTypeBuilderExtensions.HasCharSet(b, "utf8");
+                });
+
+            modelBuilder.Entity("Finansist.Domain.Entities.Usuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
+                        .HasComment("Identificador do registro.");
+
+                    b.Property<DateTime?>("AlteradoEm")
+                        .HasColumnType("datetime(6)")
+                        .HasComment("Data e hora da última alteração do registro.");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("tinyint(1)")
+                        .HasComment("Define de o registro está ativo.");
+
+                    b.Property<DateTime?>("CriadoEm")
+                        .HasColumnType("datetime(6)")
+                        .HasComment("Data e hora de criação do registro.");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("varchar(120)")
+                        .HasComment("E-mail.");
+
+                    b.Property<bool>("ExigirNovaSenha")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(120)")
+                        .HasComment("Nome.");
+
+                    b.Property<int>("Perfil")
+                        .HasColumnType("int")
+                        .HasComment("Perfil do Usuário. { 1 -> Administrador, 2 -> Cliente }.");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("varchar(30)")
+                        .HasComment("Senha.");
+
+                    b.Property<string>("Telefone")
+                        .HasColumnType("varchar(15)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("unq1_Usuario");
+
+                    b.ToTable("Usuario", (string)null);
 
                     b.HasComment("Tabela responsável pelos registros de entidade.");
 
