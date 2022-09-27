@@ -2,6 +2,7 @@ using System.Data.Common;
 using Dapper;
 using Finansist.Database.Contexts;
 using Finansist.Domain.Entities;
+using Finansist.Domain.Interfaces.Database;
 using Finansist.Domain.Interfaces.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,15 +12,18 @@ namespace Finansist.Database.Repositories
     {
         protected FinansistContext _context;
 
+        protected IUnitOfWork _uow;
+
         protected DbSet<TEntity> _dbSet;
 
         protected DbConnection _connection;
 
-        public BaseRepository(FinansistContext context)
+        public BaseRepository(FinansistContext context, IUnitOfWork uow)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
             _connection = _context.Database.GetDbConnection();
+            _uow = uow;
 
         }
 
@@ -57,7 +61,7 @@ namespace Finansist.Database.Repositories
 
         public dynamic GetRetornaCampo(Guid? id, string campo)
         {
-            throw new NotImplementedException();
+            return _connection.QueryFirstOrDefault($"Select {campo} From {typeof(TEntity).Name} Where Id = @Id", new { Id = id }, _uow.CurrentTransaction());
         }
 
         public void Update(TEntity entity)

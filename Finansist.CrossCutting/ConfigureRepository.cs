@@ -23,6 +23,7 @@ namespace Finansist.CrossCutting
             #region Repository
             services.AddScoped<FinansistContext, FinansistContext>();
             services.AddScoped<IEntidadeRepository, EntidadeRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             #endregion
 
             #region Helpers

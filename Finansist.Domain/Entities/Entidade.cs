@@ -10,18 +10,18 @@ namespace Finansist.Domain.Entities
 
         }
 
-        public Entidade(CreateEntidadeCommand cmd)
+        public Entidade(CreateEntidadeCommand createCommand)
         {
-            this.Nome = cmd.Nome;
-            this.Descricao = cmd.Descricao;
-            this.CEP = cmd.CEP;
-            this.Logradouro = cmd.Logradouro;
-            this.Bairro = cmd.Bairro;
-            this.Complemento = cmd.Complemento;
-            this.Localidade = cmd.Localidade;
-            this.UF = cmd.UF;
-            this.Numero = cmd.Numero;
-            this.Ativo = cmd.Ativo;
+            this.Nome = createCommand.Nome;
+            this.Descricao = createCommand.Descricao;
+            this.CEP = createCommand.CEP;
+            this.Logradouro = createCommand.Logradouro;
+            this.Bairro = createCommand.Bairro;
+            this.Complemento = createCommand.Complemento;
+            this.Localidade = createCommand.Localidade;
+            this.UF = createCommand.UF;
+            this.Numero = createCommand.Numero;
+            this.Ativo = createCommand.Ativo;
         }
 
         public String Nome { get; private set; } = null!;

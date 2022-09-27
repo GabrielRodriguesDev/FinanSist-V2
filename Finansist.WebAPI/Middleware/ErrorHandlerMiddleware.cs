@@ -1,6 +1,7 @@
 
 
 using Finansist.Domain.Commands;
+using Finansist.Domain.Interfaces.Infrastructure;
 using Newtonsoft.Json;
 using System.Net;
 
@@ -31,7 +32,8 @@ namespace Finansist.WebAPI.Middleware
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            var result = new GenericCommandResult(false, "(E0029) - " + exception.Message);
+            var service = context.RequestServices.GetRequiredService<IErrorManager>();
+            var result = new GenericCommandResult(false, $"{service.getCatalogError()} - " + exception.Message);
             await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
         }
     }

@@ -13,6 +13,7 @@
         public DateTime? CriadoEm { get; private set; }
         public DateTime? AlteradoEm { get; private set; }
 
+
         public void setAlteradoEm()
         {
             this.AlteradoEm = DateTime.Now;

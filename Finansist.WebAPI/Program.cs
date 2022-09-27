@@ -1,9 +1,13 @@
+using System.Text;
 using Finansist.CrossCutting;
+using Finansist.WebAPI.Middleware;
 using Finansist.WebAPI.SignalR.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region 
+#region Environment Variable
 Environment.SetEnvironmentVariable("BaseViaCEPUrl", builder.Configuration["External:BaseViaCEPUrl"]);
 #endregion
 
@@ -12,6 +16,7 @@ builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+# region Cors
 builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", b =>
             {
                 b.AllowAnyMethod()
@@ -21,8 +26,33 @@ builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", b =>
                     .WithOrigins("http://localhost:4200")
                     .WithOrigins("http://localhost:4210");
             }));
+#endregion
 
+#region Authentication
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+}).AddCookie(options =>
+    {
+        options.Cookie.SameSite = SameSiteMode.Strict;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.IsEssential = true;
+    });
+#endregion
 
 #region Dependency Injection
 ConfigureRepository.ConfigureDI(builder.Services);
@@ -56,7 +86,7 @@ else
 #endregion
 
 #region Middleware
-//app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseMiddleware<ErrorHandlerMiddleware>();
 #endregion
 
 
@@ -64,15 +94,16 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.UseCors("CorsPolicy");
 
-
 app.UseEndpoints(endpoints =>
-   {
-       endpoints.MapHub<NotifyHub>("/notify");
-   });
+    {
+        endpoints.MapHub<NotifyHub>("/notify");
+    });
 
 app.MapControllers();
 

@@ -1,7 +1,10 @@
 using Finansist.Domain.Commands.Entidade;
 using Finansist.Domain.Interfaces.Controllers.SignalR;
 using Finansist.Domain.Interfaces.Domain.Services;
+using Finansist.Infrastructure.Errors;
+using Finansist.WebAPI.Helpers;
 using Finansist.WebAPI.SignalR.Hubs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -18,12 +21,14 @@ namespace Finansist.WebAPI.Controllers
             _hubContext = hubContext;
         }
         [HttpPost]
+        [Authorize()]
         public async Task<IActionResult> Create([FromServices] IEntidadeService services, [FromBody] CreateEntidadeCommand createCommand)
         {
             var tsc = new TaskCompletionSource<IActionResult>();
+
+            ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.EntidadeCreate);
+
             var result = services.Create(createCommand);
-            // var genericResult = result.Result.Data!.GetType();
-            // var nome = genericResult.GetProperty("Nome")!.GetValue(genericResult.GetProperty("Nome"));
 
             if (result.Result.Sucess)
                 await _hubContext.Clients.All.SendNotification(new
@@ -32,6 +37,7 @@ namespace Finansist.WebAPI.Controllers
                     Idade = 20,
                     Sonho = "Estabilidade"
                 });
+
             tsc.SetResult(new JsonResult(result.Result)
             {
                 StatusCode = 200
