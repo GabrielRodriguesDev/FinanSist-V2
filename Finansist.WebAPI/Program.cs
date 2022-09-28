@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Environment Variable
 Environment.SetEnvironmentVariable("BaseViaCEPUrl", builder.Configuration["External:BaseViaCEPUrl"]);
+Environment.SetEnvironmentVariable("DomainCookie", builder.Configuration["DomainCookie"]);
 #endregion
 
 builder.Services.AddControllers();
@@ -40,18 +41,33 @@ builder.Services.AddAuthentication(option =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = false,
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
-}).AddCookie(options =>
+
+    options.Events = new JwtBearerEvents
     {
-        options.Cookie.SameSite = SameSiteMode.Strict;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        options.Cookie.IsEssential = true;
-    });
+
+        OnMessageReceived = context =>
+        {
+            if (context.Request.Cookies.ContainsKey("X-Access-Token"))
+            {
+                context.Token = context.Request.Cookies["X-Access-Token"];
+            }
+
+
+            return Task.CompletedTask;
+        },
+    };
+}); //.AddCookie(options =>
+//    {
+//        options.Cookie.SameSite = SameSiteMode.Strict;
+//        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+//        options.Cookie.IsEssential = true;
+//    });
 #endregion
 
 #region Dependency Injection

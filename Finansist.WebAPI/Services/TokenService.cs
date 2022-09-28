@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Finansist.Domain.Models.ValueObjects;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
@@ -9,24 +10,26 @@ namespace Finansist.WebAPI.Services
     public class TokenService
     {
 
-        private static ClaimsIdentity ConfigureClaimsAndRoles(Guid id, string nome, String email)
+        private static ClaimsIdentity ConfigureClaimsAndRoles(Autenticado autenticado)
         {
             return new ClaimsIdentity(new[] {
-                new Claim(ClaimTypes.Name, nome),
-                new Claim(ClaimTypes.Email, email),
-                new Claim("Id", id.ToString()),
-                new Claim(ClaimTypes.Role, PerfilUsuarioEnum.Administrador.ToString())
+                new Claim(ClaimTypes.Name, autenticado.Nome),
+                new Claim(ClaimTypes.Email, autenticado.Email),
+                new Claim("id", autenticado.Id.ToString()),
+                new Claim(ClaimTypes.Role, autenticado.Perfil.ToString()),
+                new Claim(ClaimTypes.Role, "teste1"),
+                new Claim(ClaimTypes.Role, "teste2"),
         });
         }
 
-        public static string GenerateJwtToken(HttpContext httpContext, Guid id, string nome, String email)
+        public static string GenerateJwtToken(HttpContext httpContext, Autenticado autenticado)
         {
             var service = httpContext.RequestServices.GetRequiredService<IConfiguration>();
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(service["Jwt:key"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = ConfigureClaimsAndRoles(id, nome, email),
+                Subject = ConfigureClaimsAndRoles(autenticado),
                 Expires = DateTime.UtcNow.AddHours(1),
                 Issuer = service["Jwt:Issuer"],
                 Audience = service["Jwt:Audience"],

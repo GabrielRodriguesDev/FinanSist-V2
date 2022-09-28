@@ -30,6 +30,22 @@ namespace Finansist.Domain.Entities
         public bool Ativo { get; private set; }
         public bool ExigirNovaSenha { get; private set; }
 
+        public void AlterarSenha(string senha)
+        {
+            this.Senha = CriptoHelper.HashPassword(senha);
+        }
 
+        public void setExigirNovaSenha(bool exigirNovaSenha)
+        {
+            this.ExigirNovaSenha = exigirNovaSenha;
+        }
+
+        public bool VerificarSenha(string senhaDigitada)
+        {
+            if (Senha != null)
+                return CriptoHelper.VerifyHashedPassword(Senha, senhaDigitada);
+            else
+                return false;
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace Finansist.Database.Repositories
 
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Update(entity);
         }
     }
 }

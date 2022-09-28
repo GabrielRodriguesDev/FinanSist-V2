@@ -14,7 +14,6 @@ namespace Finansist.Database.Mapping
                 entity.Property(a => a.Nome).HasColumnType("varchar(120)");
                 entity.Property(a => a.Email).HasColumnType("varchar(120)");
                 entity.HasIndex(a => a.Email).HasDatabaseName("unq1_Usuario").IsUnique();
-                entity.Property(a => a.Senha).HasColumnType("varchar(30)");
                 entity.Property(a => a.Telefone).HasColumnType("varchar(15)");
 
                 #region Comments

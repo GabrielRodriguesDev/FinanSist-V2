@@ -1,6 +1,6 @@
 using Finansist.Domain.Commands.Entidade;
 using Finansist.Domain.Interfaces.Controllers.SignalR;
-using Finansist.Domain.Interfaces.Domain.Services;
+using Finansist.Domain.Interfaces.Services;
 using Finansist.Infrastructure.Errors;
 using Finansist.WebAPI.Helpers;
 using Finansist.WebAPI.SignalR.Hubs;
@@ -21,7 +21,7 @@ namespace Finansist.WebAPI.Controllers
             _hubContext = hubContext;
         }
         [HttpPost]
-        [Authorize()]
+        [Authorize(Roles = "teste1")]
         public async Task<IActionResult> Create([FromServices] IEntidadeService services, [FromBody] CreateEntidadeCommand createCommand)
         {
             var tsc = new TaskCompletionSource<IActionResult>();

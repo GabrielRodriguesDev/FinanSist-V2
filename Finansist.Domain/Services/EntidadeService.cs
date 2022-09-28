@@ -1,11 +1,12 @@
 using Finansist.Domain.Commands;
 using Finansist.Domain.Commands.Entidade;
+using Finansist.Domain.Commands.Result;
 using Finansist.Domain.Entities;
 using Finansist.Domain.Interfaces.CrossCutting.Interfaces.Clients;
 using Finansist.Domain.Interfaces.Database;
 using Finansist.Domain.Interfaces.Database.Helpers;
 using Finansist.Domain.Interfaces.Database.Repositories;
-using Finansist.Domain.Interfaces.Domain.Services;
+using Finansist.Domain.Interfaces.Services;
 using Finansist.Domain.Models.Clients;
 
 namespace Finansist.Domain.Services

@@ -1,4 +1,5 @@
 using Finansist.Domain.Commands;
+using Finansist.Domain.Commands.Result;
 using Finansist.Domain.Models.Clients;
 using Refit;
 

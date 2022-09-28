@@ -1,6 +1,7 @@
 
 
 using Finansist.Domain.Commands;
+using Finansist.Domain.Commands.Result;
 using Finansist.Domain.Interfaces.Infrastructure;
 using Newtonsoft.Json;
 using System.Net;

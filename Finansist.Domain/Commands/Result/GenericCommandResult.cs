@@ -1,4 +1,4 @@
-namespace Finansist.Domain.Commands
+namespace Finansist.Domain.Commands.Result
 {
     public class GenericCommandResult
     {

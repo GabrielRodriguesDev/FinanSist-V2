@@ -1,4 +1,4 @@
-using Finansist.Domain.Interfaces.Domain.Services;
+using Finansist.Domain.Interfaces.Services;
 using Finansist.Domain.Interfaces.Infrastructure;
 using Finansist.Domain.Services;
 using Finansist.Infrastructure.Errors;
@@ -12,6 +12,7 @@ namespace Finansist.CrossCutting
         {
             services.AddScoped<IEntidadeService, EntidadeService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAutenticaService, AutenticaService>();
 
             #region  Infrastructure
             services.AddScoped<IErrorManager, ErrorManager>();
