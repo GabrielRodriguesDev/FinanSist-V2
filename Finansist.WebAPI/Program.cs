@@ -13,10 +13,8 @@ Environment.SetEnvironmentVariable("DomainCookie", builder.Configuration["Domain
 #endregion
 
 builder.Services.AddControllers();
-builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 # region Cors
 builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", b =>
             {
@@ -24,11 +22,12 @@ builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", b =>
                     .AllowAnyHeader()
                     .AllowAnyOrigin()
                     .AllowCredentials()
-                    .WithOrigins("http://localhost:4200")
-                    .WithOrigins("http://localhost:4210");
+                    .WithOrigins("https://localhost:7199")
+                    .WithOrigins("https://localhost:4200")
+                    .WithOrigins("http://localhost:4200");
             }));
 #endregion
-
+builder.Services.AddSignalR();
 #region Authentication
 builder.Services.AddAuthentication(option =>
 {
@@ -62,12 +61,7 @@ builder.Services.AddAuthentication(option =>
             return Task.CompletedTask;
         },
     };
-}); //.AddCookie(options =>
-//    {
-//        options.Cookie.SameSite = SameSiteMode.Strict;
-//        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-//        options.Cookie.IsEssential = true;
-//    });
+});
 #endregion
 
 #region Dependency Injection

@@ -6,6 +6,5 @@ namespace Finansist.Domain.Interfaces.Controllers.SignalR
     {
         Task SendNotification(Object Data);
 
-        // Task<String> GetConnectionId();
     }
 }

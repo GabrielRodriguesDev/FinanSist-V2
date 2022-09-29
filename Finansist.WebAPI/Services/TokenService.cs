@@ -17,8 +17,6 @@ namespace Finansist.WebAPI.Services
                 new Claim(ClaimTypes.Email, autenticado.Email),
                 new Claim("id", autenticado.Id.ToString()),
                 new Claim(ClaimTypes.Role, autenticado.Perfil.ToString()),
-                new Claim(ClaimTypes.Role, "teste1"),
-                new Claim(ClaimTypes.Role, "teste2"),
         });
         }
 

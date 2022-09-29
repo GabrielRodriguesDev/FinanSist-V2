@@ -9,10 +9,5 @@ namespace Finansist.WebAPI.SignalR.Hubs
         {
             await Clients.All.SendNotification(data);
         }
-
-        public Task<String> GetConnectionId()
-        {
-            return Task.FromResult(Context.ConnectionId.ToString());
-        }
     }
 }

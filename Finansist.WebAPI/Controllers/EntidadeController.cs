@@ -21,7 +21,7 @@ namespace Finansist.WebAPI.Controllers
             _hubContext = hubContext;
         }
         [HttpPost]
-        [Authorize(Roles = "teste1")]
+        [Authorize]
         public async Task<IActionResult> Create([FromServices] IEntidadeService services, [FromBody] CreateEntidadeCommand createCommand)
         {
             var tsc = new TaskCompletionSource<IActionResult>();
