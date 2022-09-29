@@ -21,10 +21,10 @@ builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", b =>
                 b.AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowAnyOrigin()
-                    .AllowCredentials()
-                    .WithOrigins("https://localhost:7199")
-                    .WithOrigins("https://localhost:4200")
-                    .WithOrigins("http://localhost:4200");
+                    .AllowCredentials();
+                // .WithOrigins("https://localhost:7199")
+                // .WithOrigins("https://localhost:4200")
+                // .WithOrigins("http://localhost:4200");
             }));
 #endregion
 builder.Services.AddSignalR();
