@@ -11,7 +11,7 @@ metadata:
   labels:                                 
     app: finansist              
 spec:                                     
-  replicas: 3    
+  replicas: 2    
   revisionHistoryLimit: 1
   selector:                               
     matchLabels:                          
@@ -61,8 +61,8 @@ spec:
     apiVersion: apps/v1                                   
     kind: Deployment                                      
     name: finansist                                        
-  minReplicas: 3                                          
-  maxReplicas: 9
+  minReplicas: 2                                          
+  maxReplicas: 3
   targetCPUUtilizationPercentage: 90
 
 ---
