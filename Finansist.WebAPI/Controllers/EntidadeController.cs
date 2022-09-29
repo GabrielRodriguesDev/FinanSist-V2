@@ -1,5 +1,7 @@
 using Finansist.Domain.Commands.Entidade;
+using Finansist.Domain.Commands.Result;
 using Finansist.Domain.Interfaces.Controllers.SignalR;
+using Finansist.Domain.Interfaces.Database.Repositories;
 using Finansist.Domain.Interfaces.Services;
 using Finansist.Infrastructure.Errors;
 using Finansist.WebAPI.Helpers;
@@ -44,5 +46,25 @@ namespace Finansist.WebAPI.Controllers
             });
             return await tsc.Task;
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> Get([FromServices] IEntidadeRepository services, [FromRoute] Guid id)
+        {
+            var tsc = new TaskCompletionSource<IActionResult>();
+
+            ErrorCatalogHelper.SettingCatalogedError(HttpContext, ErrorCatalog.EntidadeCreate);
+
+            dynamic? result = services.Get(id);
+
+            if (result is null) result = new GenericCommandResult(false, "Entidade não localizada.");
+
+            tsc.SetResult(new JsonResult(result)
+            {
+                StatusCode = 200
+            });
+            return await tsc.Task;
+        }
+
     }
 }
