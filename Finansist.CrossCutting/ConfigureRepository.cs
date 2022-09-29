@@ -14,7 +14,8 @@ namespace Finansist.CrossCutting
     {
         public static void ConfigureDI(IServiceCollection services)
         {
-            var connectionString = "Server=localhost;Port=3306;Database=finansist;Uid=root;Pwd=fx870";
+            //var connectionString = "Server=localhost;Port=3306;Database=finansist;Uid=root;Pwd=fx870";
+            var connectionString = "Server=gabriel-database-do-user-12271655-0.b.db.ondigitalocean.com;Port=25060;Database=finansist;Uid=doadmin;Pwd=AVNS_mR1t_CCRXMAg_x4Qlzk";
             #region Context And Transaction
             services.AddDbContext<FinansistContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).LogTo(Console.Write));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
