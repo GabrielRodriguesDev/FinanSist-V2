@@ -110,11 +110,12 @@ app.UseAuthorization();
 
 app.UseCors("CorsPolicy");
 
+app.MapControllers();
+
 app.UseEndpoints(endpoints =>
     {
+        endpoints.MapControllers();
         endpoints.MapHub<NotifyHub>("/notify");
     });
-
-app.MapControllers();
 
 app.Run();
