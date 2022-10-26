@@ -73,7 +73,7 @@ namespace Finansist.Database.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     Email = table.Column<string>(type: "varchar(120)", nullable: false, comment: "E-mail.")
                         .Annotation("MySql:CharSet", "utf8"),
-                    Senha = table.Column<string>(type: "varchar(30)", nullable: false, comment: "Senha.")
+                    Senha = table.Column<string>(type: "longtext", nullable: false, comment: "Senha.")
                         .Annotation("MySql:CharSet", "utf8"),
                     Telefone = table.Column<string>(type: "varchar(15)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8"),

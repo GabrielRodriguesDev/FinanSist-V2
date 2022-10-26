@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Finansist.Database.Migrations
 {
     [DbContext(typeof(FinansistContext))]
-    [Migration("20220927012622_VR01")]
+    [Migration("20221026020305_VR01")]
     partial class VR01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,7 +169,7 @@ namespace Finansist.Database.Migrations
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("varchar(30)")
+                        .HasColumnType("longtext")
                         .HasComment("Senha.");
 
                     b.Property<string>("Telefone")

@@ -1,7 +1,6 @@
 using Finansist.Domain.Commands.Result;
 using Finansist.Domain.Commands.Usuario;
 using Finansist.Domain.Entities;
-using Finansist.Domain.Interfaces.CrossCutting.Interfaces.Clients;
 using Finansist.Domain.Interfaces.Database;
 using Finansist.Domain.Interfaces.Database.Helpers;
 using Finansist.Domain.Interfaces.Database.Repositories;
@@ -15,20 +14,16 @@ namespace Finansist.Domain.Services
 
         private IUnitOfWork _uow;
 
-        private IViaCEPClient _viaCEPClient;
-
         private IControleSequenciaHelper _controleSequenciaHelper;
 
         public UsuarioService(
             IUnitOfWork uow,
             IUsuarioRepository usuarioRepository,
-            IViaCEPClient viaCEPClient,
             IControleSequenciaHelper controleSequenciaHelper
         )
         {
             _uow = uow;
             _usuarioRepository = usuarioRepository;
-            _viaCEPClient = viaCEPClient;
             _controleSequenciaHelper = controleSequenciaHelper;
         }
 
@@ -56,7 +51,7 @@ namespace Finansist.Domain.Services
                 _uow.Rollback();
                 throw;
             }
-            return new GenericCommandResult(true, $"Usuário {usuario.Nome} cadastrado com sucesso", new
+            return new GenericCommandResult(true, $"Usuário {usuario.Nome} cadastrado com sucesso.", new
             {
                 Nome = usuario.Nome,
                 Email = usuario.Email,

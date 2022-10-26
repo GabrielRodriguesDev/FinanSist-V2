@@ -167,7 +167,7 @@ namespace Finansist.Database.Migrations
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("varchar(30)")
+                        .HasColumnType("longtext")
                         .HasComment("Senha.");
 
                     b.Property<string>("Telefone")
