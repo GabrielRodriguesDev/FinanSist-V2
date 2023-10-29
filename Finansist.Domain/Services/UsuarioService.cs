@@ -28,7 +28,7 @@ namespace Finansist.Domain.Services
         }
 
 
-        public GenericCommandResult Create(CreateUsuarioCommand createCommand)
+        public Object? Create(CreateUsuarioCommand createCommand)
         {
             createCommand.Validate();
             if (createCommand.Invalid)
@@ -51,14 +51,7 @@ namespace Finansist.Domain.Services
                 _uow.Rollback();
                 throw;
             }
-            return new GenericCommandResult(true, $"Usuário {usuario.Nome} cadastrado com sucesso.", new
-            {
-                Nome = usuario.Nome,
-                Email = usuario.Email,
-                Telefone = usuario.Telefone,
-                SenhaTemporaria = senhaTemporaria,
-                Ativo = usuario.Ativo
-            });
+            return new { Nome = usuario.Nome, Email = usuario.Email }; 
         }
     }
 }

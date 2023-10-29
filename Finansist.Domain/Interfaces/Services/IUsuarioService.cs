@@ -6,6 +6,6 @@ namespace Finansist.Domain.Interfaces.Services
 {
     public interface IUsuarioService
     {
-        GenericCommandResult Create(CreateUsuarioCommand createCommand);
+        Object? Create(CreateUsuarioCommand createCommand);
     }
 }
