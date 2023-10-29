@@ -10,24 +10,15 @@ namespace Finansist.WebAPI.Services
     public class TokenService
     {
 
-        private static ClaimsIdentity ConfigureClaimsAndRoles(Autenticado autenticado)
-        {
-            return new ClaimsIdentity(new[] {
-                new Claim(ClaimTypes.Name, autenticado.Nome),
-                new Claim(ClaimTypes.Email, autenticado.Email),
-                new Claim("id", autenticado.Id.ToString()),
-                new Claim(ClaimTypes.Role, autenticado.Perfil.ToString()),
-        });
-        }
+    
 
-        public static string GenerateJwtToken(HttpContext httpContext, Autenticado autenticado)
+        public static string GenerateJwtToken(HttpContext httpContext)
         {
             var service = httpContext.RequestServices.GetRequiredService<IConfiguration>();
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(service["Jwt:key"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = ConfigureClaimsAndRoles(autenticado),
                 Expires = DateTime.UtcNow.AddHours(1),
                 Issuer = service["Jwt:Issuer"],
                 Audience = service["Jwt:Audience"],

@@ -37,7 +37,7 @@ namespace Finansist.WebAPI.Controllers
             var result = services.Login(loginCommand);
             if (result.Sucess && result != null)
             {
-                var token = TokenService.GenerateJwtToken(HttpContext, result.Autenticado);
+                var token = TokenService.GenerateJwtToken(HttpContext);
                 result.Autenticado.Token = token;
             }
             tsc.SetResult(new JsonResult(result)

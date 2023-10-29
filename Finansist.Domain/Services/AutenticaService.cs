@@ -27,30 +27,12 @@ namespace Finansist.Domain.Services
                 return new LoginCommandResult(false, "Ops! Algo deu errado", command.Notifications);
 
             var usuario = _usuarioRepository.GetPorEmail(command.Email!);
-            if (usuario is null) return new LoginCommandResult(false, "E-mail não localizado.");
+            if (usuario is null) return new LoginCommandResult(false, "Erro.");
 
-            if (!usuario.VerificarSenha(command.Senha!)) return new LoginCommandResult(false, "Usuário ou senha inválidos");
-
-            if (usuario.ExigirNovaSenha == true)
-            {
-                usuario.AlterarSenha("Fx@870Fx@870");
-                usuario.setExigirNovaSenha(false);
-
-                _uow.BeginTransaction();
-
-                try
-                {
-                    _usuarioRepository.Update(usuario);
-                    _uow.Commit();
-                }
-                catch (System.Exception)
-                {
-                    _uow.Rollback();
-                    throw;
-                }
-            }
+            if (!usuario.VerificarSenha(command.Senha!)) return new LoginCommandResult(false, "Erro.");
+            
             Autenticado autenticado = new Autenticado(usuario);
-            return new LoginCommandResult(true, "Usuário autenticado com sucesso.", null, autenticado);
+            return new LoginCommandResult(true, "Ok", null, autenticado);
         }
     }
 }

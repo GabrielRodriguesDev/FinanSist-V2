@@ -8,8 +8,6 @@ namespace Finansist.Domain.Commands.Result
         public LoginCommandResult(bool sucess, string message, object? data, Autenticado? autenticado = null)
         {
             Sucess = sucess;
-            Message = message;
-            Data = data;
             Autenticado = autenticado!;
         }
 
